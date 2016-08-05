@@ -8,9 +8,6 @@ namespace GreetUP.Models
     public class RSVP
     {
         public int RSVPID { get; set; }
-        public int EventId { get; set; }
-        public int ApplicationUserId { get; set; }
-
 
     //Navigation Properties
     //linking EventId to Event table---linking ApplicationUserId to ApplicationUser table
