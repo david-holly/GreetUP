@@ -16,7 +16,8 @@ namespace GreetUP.Models
         [MaxLength(50)]
         public string Date { get; set; }
         public string Description { get; set; }
-        
+        [MaxLength(100)]
+        public string Address { get; set; }
 
         //Navigation Properties 
         //linking ApplicationUserId to ApplicationUser table
