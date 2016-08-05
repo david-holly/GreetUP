@@ -22,25 +22,25 @@ namespace GreetUP.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
-
-            context.ApplicationUsers.AddOrUpdate(
+            
+            context.Users.AddOrUpdate(
               p => p.UserName,
 
               new ApplicationUser
               { UserName = "AndrewPeters",
                   Email = "andrew@example.com",
-                  PhoneNumber = "555-5555",
+                  PhoneNumber = "555-5655",
 
               },
               new ApplicationUser
               { UserName = "BriceLambson",
                 Email = "brice@example.com",
-                PhoneNumber = "555-5555",
+                PhoneNumber = "555-5755",
               },
               new ApplicationUser
               { UserName = "RowanMiller",
-              Email = "brice@example.com",
-              PhoneNumber = "555-5555",
+              Email = "rowan@example.com",
+              PhoneNumber = "555-5855",
               }
 
             );
