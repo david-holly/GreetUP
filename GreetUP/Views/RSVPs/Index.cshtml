@@ -22,7 +22,7 @@
             @Html.DisplayFor(modelItem => item.Event)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ApplicationUser)
+            @Html.DisplayFor(modelItem => item.ApplicationUser.UserName)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.RSVPID }) |

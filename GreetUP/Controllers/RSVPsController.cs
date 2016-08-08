@@ -56,6 +56,23 @@ namespace GreetUP.Controllers
             return View();
         }
 
+        public ActionResult Going(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            RSVP rsvp = db.RSVPs.Find(id);
+            if (rsvp == null)
+            {
+                return HttpNotFound();
+            }
+            if (rsvp != null)
+            {
+                //db.RSVPs
+            }
+        }
+
         // POST: RSVPs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
