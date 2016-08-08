@@ -69,16 +69,24 @@ namespace GreetUP.Migrations
                 p => p.EventName,
                 new Event
                 {
+                    
                     EventName = "Comicon",
                     Time = "Noon",
                     Address = "SanDiego",
                     Date = "January 12th, 2016",
                     Description = "Come get your comic on!",
                 }
+                );
 
-            );
-
-
+            var Comicon = context.Events.Single(e => e.EventName == "Comicon");
+            context.RSVPs.AddOrUpdate(
+                p => p.RSVPID,
+                new RSVP
+                {
+                    Event = Comicon,
+                    ApplicationUser = context.Users.Single(u => u.UserName == "BriceLambson")
+                }
+                );
         }
     }
 }

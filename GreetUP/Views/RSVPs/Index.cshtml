@@ -1,0 +1,35 @@
+﻿@model IEnumerable<GreetUP.Models.RSVP>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>Event</th>
+
+        <th>User</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Event)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplicationUser)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RSVPID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RSVPID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RSVPID })
+        </td>
+    </tr>
+}
+
+</table>

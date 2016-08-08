@@ -7,114 +7,125 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GreetUP.Models;
+using Microsoft.AspNet.Identity;
 
 namespace GreetUP.Controllers
 {
-    public class EventsController : Controller
+    public class RSVPsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Events
+        // GET: RSVPs 
+        [AllowAnonymous] 
         public ActionResult Index()
         {
-            return View(db.Events.ToList());
+            if (Request.IsAuthenticated)
+            {
+                UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>(new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(db));
+                ApplicationUser currentUser = UserManager.FindById(User.Identity.GetUserId());
+
+                List<RSVP> RSVPs = db.RSVPs.Where(p => p.ApplicationUser.Id == currentUser.Id) .ToList();
+
+                if (RSVPs.Count == 0)
+                    RSVPs = db.RSVPs.ToList();
+
+                return View(RSVPs);
+                    
+            }
+            return View(db.RSVPs.ToList());
         }
 
-        // GET: Events/Details/5
+        // GET: RSVPs/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = db.Events.Find(id);
-            if (@event == null)
+            RSVP rSVP = db.RSVPs.Find(id);
+            if (rSVP == null)
             {
                 return HttpNotFound();
             }
-            return View(@event);
+            return View(rSVP);
         }
 
-        // GET: Events/Create
-        //[Authorize(Roles = "canEdit")]
+        // GET: RSVPs/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Events/Create
+        // POST: RSVPs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "canEdit")]
-        public ActionResult Create([Bind(Include = "EventID,EventName,Time,Date,Description,Address")] Event @event)
+        public ActionResult Create([Bind(Include = "RSVPID")] RSVP rSVP)
         {
             if (ModelState.IsValid)
             {
-                db.Events.Add(@event);
+                db.RSVPs.Add(rSVP);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(@event);
+            return View(rSVP);
         }
 
-        // GET: Events/Edit/5
-        [Authorize(Roles = "canEdit")]
+        // GET: RSVPs/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = db.Events.Find(id);
-            if (@event == null)
+            RSVP rSVP = db.RSVPs.Find(id);
+            if (rSVP == null)
             {
                 return HttpNotFound();
             }
-            return View(@event);
+            return View(rSVP);
         }
 
-        // POST: Events/Edit/5
+        // POST: RSVPs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventID,EventName,Time,Date,Description,Address")] Event @event)
+        public ActionResult Edit([Bind(Include = "RSVPID")] RSVP rSVP)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(@event).State = EntityState.Modified;
+                db.Entry(rSVP).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(@event);
+            return View(rSVP);
         }
 
-        // GET: Events/Delete/5
-        
+        // GET: RSVPs/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = db.Events.Find(id);
-            if (@event == null)
+            RSVP rSVP = db.RSVPs.Find(id);
+            if (rSVP == null)
             {
                 return HttpNotFound();
             }
-            return View(@event);
+            return View(rSVP);
         }
 
-        // POST: Events/Delete/5
+        // POST: RSVPs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Event @event = db.Events.Find(id);
-            db.Events.Remove(@event);
+            RSVP rSVP = db.RSVPs.Find(id);
+            db.RSVPs.Remove(rSVP);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
