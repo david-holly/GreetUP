@@ -32,7 +32,9 @@ namespace GreetUP.Controllers
                 return View(RSVPs);
                     
             }
-            return View(db.RSVPs.ToList());
+            var rsvp = db.Events.Include(o => o.EventName);
+            return View(rsvp.ToList());
+            //return View(db.RSVPs.ToList());
         }
 
         // GET: RSVPs/Details/5
@@ -53,32 +55,35 @@ namespace GreetUP.Controllers
         // GET: RSVPs/Create
         public ActionResult Create()
         {
+         
+            ViewBag.EventID = new SelectList(db.Events, "EventID", "EventName");
+
             return View();
         }
 
-        public ActionResult Going(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            RSVP rsvp = db.RSVPs.Find(id);
-            if (rsvp == null)
-            {
-                return HttpNotFound();
-            }
-            if (rsvp != null)
-            {
-                //db.RSVPs
-            }
-        }
+        //public ActionResult Going(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    RSVP rsvp = db.RSVPs.Find(id);
+        //    if (rsvp == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    if (rsvp != null)
+        //    {
+               
+        //    }
+        //}
 
         // POST: RSVPs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RSVPID")] RSVP rSVP)
+        public ActionResult Create([Bind(Include = "EventName")] RSVP rSVP)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +91,7 @@ namespace GreetUP.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.EventID = new SelectList(db.Events, "EventID", "EventName", rSVP.Event);
             return View(rSVP);
         }
 
@@ -102,6 +107,8 @@ namespace GreetUP.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.EventID = new SelectList(db.Events,"EventID", "EventName", rSVP.Event);
+           
             return View(rSVP);
         }
 
@@ -110,7 +117,7 @@ namespace GreetUP.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RSVPID")] RSVP rSVP)
+        public ActionResult Edit([Bind(Include = "EventName")] RSVP rSVP)
         {
             if (ModelState.IsValid)
             {
@@ -118,6 +125,7 @@ namespace GreetUP.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.EventID = new SelectList(db.Events,"EventID", "EventName", rSVP.Event);
             return View(rSVP);
         }
 
