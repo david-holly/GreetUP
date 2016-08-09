@@ -241,6 +241,7 @@
     </Content>
     <None Include="Properties\PublishProfiles\GreetUP20160804012515.pubxml" />
     <None Include="Properties\PublishProfiles\GreetUP20160804013420 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\GreetUP20160809025548 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
