@@ -19,8 +19,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Event)
-        </td>
+            @Html.DisplayFor(modelItem => item.Event.EventName)
         <td>
             @Html.DisplayFor(modelItem => item.ApplicationUser.UserName)
         </td>

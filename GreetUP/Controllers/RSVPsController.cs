@@ -89,6 +89,7 @@ namespace GreetUP.Controllers
             {
                 db.RSVPs.Add(rSVP);
                 db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
             ViewBag.EventID = new SelectList(db.Events, "EventID", "EventName", rSVP.Event);
